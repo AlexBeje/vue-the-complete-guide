@@ -22,10 +22,11 @@
     <button @click="reduce()">Reduce</button>
     <button @click.right="reduce(5)">Reduce 5</button>
     <p>Result: {{ counter }}</p>
-    Name <input type="text" @input="setName">
+    Name <input type="text" @input="setName" @keyup.enter="confirmName">
     </br>
-    Uppercase Name <input type="text" @input="setName($event, 'toUppercase')">
+    Uppercase Name <input type="text" @input="setName($event, 'toUppercase')" @keyup.enter="confirmName">
     <p>Your Name: {{ name }}</p>
+    <p>Your Confirmed Name: {{ confirmedName }}</p>
     <form @submit.prevent="submitForm">
       <input type="text">
       <button>Sign Up</button>
