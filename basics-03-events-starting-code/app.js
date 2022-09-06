@@ -20,6 +20,9 @@ const app = Vue.createApp({
           ? this.counter - number
           : this.counter;
     },
+    submitForm() {
+      alert('Submitted!');
+    }
   },
 });
 

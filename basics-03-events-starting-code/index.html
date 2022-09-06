@@ -26,6 +26,10 @@
     </br>
     Uppercase Name <input type="text" @input="setName($event, 'toUppercase')">
     <p>Your Name: {{ name }}</p>
+    <form @submit.prevent="submitForm">
+      <input type="text">
+      <button>Sign Up</button>
+    </form>
   </section>
 </body>
 
