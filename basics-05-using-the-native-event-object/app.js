@@ -4,21 +4,28 @@ const app = Vue.createApp({
       counter: 0,
       name: '',
       lastName: '',
-      fullName: ''
+      // fullName: ''
     };
   },
   watch: {
-    name(value) {
-      this.fullName = value + ' ' + this.lastName
-    },
-    lastName(value) {
-      this.fullName = this.name + ' ' + value;
+    // execute ONCE
+    counter(value) {
+      if(value > 50) {
+        this.counter = 0;
+      }
     }
+    // name(value) {
+    //   this.fullName = value + ' ' + this.lastName
+    // },
+    // lastName(value) {
+    //   this.fullName = this.name + ' ' + value;
+    // }
   },
   computed: {
-    // fullName() {
-    //   return this.name && this.name + ' ' + 'Bejenaru'
-    // },
+    // execute EVERY TIME the VALUES CHANGE
+    fullName() {
+      return this.name && this.name + ' ' + this.lastName
+    },
   },
   methods: {
     setName(event) {
