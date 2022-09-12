@@ -9,16 +9,21 @@ Vue.createApp({
   methods: {
     selectBox(box) {
       switch (box) {
-        case 'A':
+        case "A":
           this.boxASelected = !this.boxASelected;
           break;
-        case 'B':
+        case "B":
           this.boxBSelected = !this.boxBSelected;
           break;
-        case 'C':
+        case "C":
           this.boxCSelected = !this.boxCSelected;
           break;
       }
-    }
-  }
+    },
+  },
+  computed: {
+    boxAClasses() {
+      return { active: this.boxASelected };
+    },
+  },
 }).mount("#styling");
