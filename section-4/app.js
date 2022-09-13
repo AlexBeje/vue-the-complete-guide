@@ -1,9 +1,3 @@
-// We can define functions outside the Vue app and use them inside the Vue app
-//
-// function getRandomValue(min, max) {
-//   Math.floor(Math.random() * (max - min)) + min
-// }
-
 Vue.createApp({
   data() {
     return {
@@ -17,7 +11,7 @@ Vue.createApp({
     specialAttackIsAvailable() {
       return this.specialAttackColdown === 0;
     },
-    gameEnd() {
+    gameEnded() {
       return this.monsterHealth <= 0 || this.playerHealth <= 0;
     },
   },
@@ -30,16 +24,11 @@ Vue.createApp({
       return attackValue >= health ? 0 : (health -= attackValue);
     },
     attackMonster() {
-      if (this.gameEnd) {
+      if (this.gameEnded) {
         return;
       }
-
       this.currentRound++;
-      // Calculate a random number between 5 and 12 (use the function outside the vue app)
-      //
-      // const attackValue = getRandomValue(5, 12);
       const attackValue = this.getRandomValue(5, 12);
-      // this.monsterHealth = this.monsterHealth - attackValue;
       this.monsterHealth = this.getHealthByAttackValue(
         attackValue,
         this.monsterHealth
@@ -54,30 +43,29 @@ Vue.createApp({
         this.playerHealth
       );
     },
-    specialAttack() {
-      if (this.gameEnd) {
-        return;
-      }
-
-      this.specialAttackUsed = true;
-      this.specialAttackColdown = 3;
-
-      const attackValue = this.getRandomValue(10, 25);
-
-      this.monsterHealth = this.getHealthByAttackValue(
-        attackValue,
-        this.monsterHealth
-      );
-
-      this.attackPlayer();
-    },
     specialAttackHandler() {
       if (this.specialAttackUsed && !this.gameEnd) {
-        this.specialAttackColdown -= 1;
+        this.specialAttackColdown =
+          this.specialAttackColdown !== 0
+            ? (this.specialAttackColdown -= 1)
+            : 0;
         if (this.specialAttackColdown === 0) {
           this.specialAttackUsed = !this.specialAttackUsed;
         }
       }
+    },
+    specialAttack() {
+      if (this.gameEnded) {
+        return;
+      }
+      this.specialAttackUsed = true;
+      this.specialAttackColdown = 3;
+      const attackValue = this.getRandomValue(10, 25);
+      this.monsterHealth = this.getHealthByAttackValue(
+        attackValue,
+        this.monsterHealth
+      );
+      this.attackPlayer();
     },
     healthBarWidth(healthBar) {
       return { width: `${healthBar}%` };
