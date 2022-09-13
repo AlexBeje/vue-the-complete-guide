@@ -3,7 +3,7 @@
 }
 
 html {
-  font-family: 'Jost', sans-serif;
+  font-family: "Jost", sans-serif;
 }
 
 body {
@@ -116,4 +116,16 @@ button:disabled {
 
 .log--heal {
   color: green;
+}
+
+.flex {
+  display: flex;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.ml-2 {
+  margin-left: calc(8 * 2px);
 }

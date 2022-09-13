@@ -19,13 +19,17 @@
     <section id=" player" class="container">
       <h2>Your Health</h2>
       <div class="healthbar">
-        <div class="healthbar__value" :style="healthBarWidth(playerHealth)">{{playerHealth}}</div>
+        <div class="healthbar__value flex items-center" :style="healthBarWidth(playerHealth)">
+          <span class="ml-2">{{playerHealth}}%</span>
+        </div>
       </div>
     </section>
     <section id="monster" class="container">
       <h2>Monster Health</h2>
       <div class="healthbar">
-        <div class="healthbar__value" :style="healthBarWidth(monsterHealth)">{{monsterHealth}}</div>
+        <div class="healthbar__value flex items-center" :style="healthBarWidth(monsterHealth)">
+          <span class="ml-2">{{monsterHealth}}%</span>
+        </div>
       </div>
     </section>
     <section id="controls">

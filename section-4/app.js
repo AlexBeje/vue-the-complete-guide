@@ -32,7 +32,7 @@ Vue.createApp({
       return Math.floor(Math.random() * (max - min)) + min;
     },
     getHealthByAttackValue(attackValue, health) {
-      return attackValue >= health ? 0 : (health -= attackValue);
+      return attackValue >= health ? this.minHealth : (health -= attackValue);
     },
     getHealthByHealValue(healValue, health) {
       return health + healValue >= this.maxHealth
