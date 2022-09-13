@@ -17,14 +17,32 @@ Vue.createApp({
           roundsUntilAbilityCanBeUsed: 0,
         },
       },
+      playerSurrendered: false,
+      winnerTextColor: "black",
     };
   },
   computed: {
     gameOver() {
       return (
         this.monsterHealth <= this.minHealth ||
-        this.playerHealth <= this.minHealth
+        this.playerHealth <= this.minHealth ||
+        this.playerSurrendered
       );
+    },
+    winner() {
+      if (this.gameOver) {
+        if (this.monsterHealth === this.playerHealth && !this.playerSurrendered) {
+          this.winnerTextColor = "orange";
+          return "It's a Draw!";
+        }
+        if (this.monsterHealth > this.playerHealth || this.playerSurrendered) {
+          this.winnerTextColor = "red";
+          return "The Monster won!";
+        } else {
+          this.winnerTextColor = "green";
+          return "You won!";
+        }
+      }
     },
   },
   methods: {
@@ -110,6 +128,29 @@ Vue.createApp({
       );
       this.updateAbilityColdown(this.abilities.specialAttack);
       this.attackPlayer();
+    },
+    surrender() {
+      if (this.gameOver) {
+        return;
+      }
+      this.playerSurrendered = true;
+    },
+    newGame() {
+      this.playerHealth = 100;
+      this.monsterHealth = 100;
+      this.abilities = {
+        specialAttack: {
+          used: false,
+          coldown: 3,
+          roundsUntilAbilityCanBeUsed: 0,
+        },
+        heal: {
+          used: false,
+          coldown: 2,
+          roundsUntilAbilityCanBeUsed: 0,
+        },
+      };
+      this.playerSurrendered = false;
     },
   },
 }).mount("#game");
