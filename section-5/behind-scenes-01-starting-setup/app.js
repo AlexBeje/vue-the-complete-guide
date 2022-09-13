@@ -2,7 +2,7 @@ const app = Vue.createApp({
   data() {
     return {
       currentUserInput: '',
-      message: 'Vue is great!',
+      messageApp1: 'Vue is great!',
     };
   },
   methods: {
@@ -10,14 +10,32 @@ const app = Vue.createApp({
       this.currentUserInput = event.target.value;
     },
     setText() {
-      this.message = this.currentUserInput;
+      this.messageApp1 = this.currentUserInput;
     },
   },
 });
 
-// ...
+const app2 = Vue.createApp({
+  data() {
+    return {
+      currentUserInput: '',
+      messageApp2: 'Vue is great!',
+    };
+  },
+  methods: {
+    saveInput(event) {
+      this.currentUserInput = event.target.value;
+    },
+    setText() {
+      this.messageApp2 = this.currentUserInput;
+    },
+  },
+});
 
 app.mount('#app');
+app2.mount('#app2');
+
+// ...
 
 let message = 'Hello';
 let longMessage = message + 'World'
