@@ -3,16 +3,28 @@ Vue.createApp({
     return {
       playerHealth: 100,
       monsterHealth: 100,
-      specialAttackUsed: false,
-      specialAttackColdown: 0,
+      minHealth: 0,
+      maxHealth: 100,
+      abilities: {
+        specialAttack: {
+          used: false,
+          coldown: 3,
+          roundsUntilAbilityCanBeUsed: 0,
+        },
+        heal: {
+          used: false,
+          coldown: 2,
+          roundsUntilAbilityCanBeUsed: 0,
+        },
+      },
     };
   },
   computed: {
-    specialAttackIsAvailable() {
-      return this.specialAttackColdown === 0;
-    },
-    gameEnded() {
-      return this.monsterHealth <= 0 || this.playerHealth <= 0;
+    gameOver() {
+      return (
+        this.monsterHealth <= this.minHealth ||
+        this.playerHealth <= this.minHealth
+      );
     },
   },
   methods: {
@@ -20,11 +32,18 @@ Vue.createApp({
       return Math.floor(Math.random() * (max - min)) + min;
     },
     getHealthByAttackValue(attackValue, health) {
-      // If the attack value is greater than the health returns 0 else returns the remaining health
       return attackValue >= health ? 0 : (health -= attackValue);
     },
+    getHealthByHealValue(healValue, health) {
+      return health + healValue >= this.maxHealth
+        ? this.maxHealth
+        : (health += healValue);
+    },
+    healthBarWidth(healthBar) {
+      return { width: `${healthBar}%` };
+    },
     attackMonster() {
-      if (this.gameEnded) {
+      if (this.gameOver) {
         return;
       }
       this.currentRound++;
@@ -34,7 +53,8 @@ Vue.createApp({
         this.monsterHealth
       );
       this.attackPlayer();
-      this.specialAttackHandler();
+      this.updateAbilityColdown(this.abilities.specialAttack);
+      this.updateAbilityColdown(this.abilities.heal);
     },
     attackPlayer() {
       const attackValue = this.getRandomValue(8, 15);
@@ -43,32 +63,53 @@ Vue.createApp({
         this.playerHealth
       );
     },
-    specialAttackHandler() {
-      if (this.specialAttackUsed && !this.gameEnd) {
-        this.specialAttackColdown =
-          this.specialAttackColdown !== 0
-            ? (this.specialAttackColdown -= 1)
+    updateAbilityColdown(ability) {
+      if (ability.used) {
+        ability.roundsUntilAbilityCanBeUsed =
+          ability.roundsUntilAbilityCanBeUsed !== 0
+            ? (ability.roundsUntilAbilityCanBeUsed -= 1)
             : 0;
-        if (this.specialAttackColdown === 0) {
-          this.specialAttackUsed = !this.specialAttackUsed;
+        if (ability.roundsUntilAbilityCanBeUsed === 0) {
+          ability.used = !ability.used;
         }
       }
     },
+    abilityIsAvailable(ability) {
+      return ability.roundsUntilAbilityCanBeUsed === 0;
+    },
     specialAttack() {
-      if (this.gameEnded) {
+      if (this.gameOver) {
         return;
       }
-      this.specialAttackUsed = true;
-      this.specialAttackColdown = 3;
+      if (this.playerHealth > this.minHealth) {
+        this.abilities.specialAttack.used = true;
+        this.abilities.specialAttack.roundsUntilAbilityCanBeUsed =
+          this.abilities.specialAttack.coldown;
+      }
       const attackValue = this.getRandomValue(10, 25);
       this.monsterHealth = this.getHealthByAttackValue(
         attackValue,
         this.monsterHealth
       );
+      this.updateAbilityColdown(this.abilities.heal);
       this.attackPlayer();
     },
-    healthBarWidth(healthBar) {
-      return { width: `${healthBar}%` };
+    heal() {
+      if (this.gameOver) {
+        return;
+      }
+      if (this.playerHealth < this.maxHealth) {
+        this.abilities.heal.used = true;
+        this.abilities.heal.roundsUntilAbilityCanBeUsed =
+          this.abilities.heal.coldown;
+      }
+      const healValue = this.getRandomValue(8, 20);
+      this.playerHealth = this.getHealthByHealValue(
+        healValue,
+        this.playerHealth
+      );
+      this.updateAbilityColdown(this.abilities.specialAttack);
+      this.attackPlayer();
     },
   },
 }).mount("#game");

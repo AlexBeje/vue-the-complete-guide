@@ -19,19 +19,23 @@
     <section id=" player" class="container">
       <h2>Your Health</h2>
       <div class="healthbar">
-        <div class="healthbar__value" :style="healthBarWidth(playerHealth)"></div>
+        <div class="healthbar__value" :style="healthBarWidth(playerHealth)">{{playerHealth}}</div>
       </div>
     </section>
     <section id="monster" class="container">
       <h2>Monster Health</h2>
       <div class="healthbar">
-        <div class="healthbar__value" :style="healthBarWidth(monsterHealth)"></div>
+        <div class="healthbar__value" :style="healthBarWidth(monsterHealth)">{{monsterHealth}}</div>
       </div>
     </section>
     <section id="controls">
       <button @click="attackMonster">ATTACK</button>
-      <button @click="specialAttack" :disabled="!specialAttackIsAvailable">SPECIAL ATTACK</button>
-      <button>HEAL</button>
+      <button @click="specialAttack" :disabled="!abilityIsAvailable(abilities.specialAttack)">
+        SPECIAL ATTACK
+      </button>
+      <button @click="heal" :disabled="!abilityIsAvailable(abilities.heal)">
+        HEAL
+      </button>
       <button>SURRENDER</button>
     </section>
     <section id="log" class="container">
