@@ -7,7 +7,7 @@ Vue.createApp({
     };
   },
   computed: {
-    hideShowTextHandle() {
+    hideTasksListButtonLabel() {
       return `${this.taskListVisible ? "Hide" : "Show"} list`;
     },
   },
