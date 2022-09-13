@@ -16,6 +16,14 @@ const app = Vue.createApp({
 });
 
 const app2 = Vue.createApp({
+  template: `
+    <h2>How Vue Works</h2>
+    <input type="text" @input="saveInput">
+    <button @click="setText">Set Text</button>
+    <!-- does not work! -->
+    <p>App 1 message - {{ messageApp1 }}</p>
+    <p>app 2 message - {{ messageApp2 }}</p>
+  `,
   data() {
     return {
       currentUserInput: '',
