@@ -27,7 +27,10 @@
       No goals have been added yet - please start adding some!
     </p>
     <ul v-else>
-      <li v-for="(goal, index) in goals" @click="removeGoal(index)">{{goal}} - {{index}}</li>
+      <li v-for="(goal, index) in goals" @click="removeGoal(index)">
+        {{goal}} - {{index}}
+        <input type="text" @click.stop>
+      </li>
     </ul>
     <!-- You can also loop trough an object -->
     <!-- <ul v-for="(value, key, index) in {name: 'Alex', age: 29}">
