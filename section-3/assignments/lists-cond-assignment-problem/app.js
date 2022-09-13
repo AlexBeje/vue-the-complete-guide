@@ -6,6 +6,11 @@ Vue.createApp({
       taskListVisible: true,
     };
   },
+  computed: {
+    hideShowTextHandle() {
+      return `${this.taskListVisible ? "Hide" : "Show"} list`;
+    },
+  },
   methods: {
     addTask() {
       this.taskDescription && this.tasks.push(this.taskDescription);
