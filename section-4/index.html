@@ -16,14 +16,6 @@
     <h1>Monster Slayer</h1>
   </header>
   <div id="game">
-    <section class="game-over" v-if="gameOver">
-      <h2>Game Over!</h2>
-      <hr>
-      <h2 :style="{color: winnerTextColor}">{{winner}}</h2>
-      <button @click="newGame">
-        NEW GAME
-      </button>
-    </section>
     <section id=" player" class="container">
       <h2>Your Health</h2>
       <div class="healthbar">
@@ -40,7 +32,16 @@
         </div>
       </div>
     </section>
-    <section id="controls">
+    <section class="game-over" v-if="gameOver">
+      <h2 v-if="playerSurrendered">You surrendered!</h2>
+      <h2 v-else>Game Over!</h2>
+      <hr>
+      <h2 :style="{color: winnerTextColor}">{{winner}}</h2>
+      <button @click="newGame">
+        NEW GAME
+      </button>
+    </section>
+    <section id="controls" v-if="!gameOver">
       <button @click="attackMonster">ATTACK</button>
       <button @click="specialAttack" :disabled="!abilityIsAvailable(abilities.specialAttack)">
         SPECIAL ATTACK
@@ -50,9 +51,26 @@
       </button>
       <button @click="surrender">SURRENDER</button>
     </section>
-    <section id="log" class="container">
+    <section id="log" class="container" v-if="logMessages.length">
       <h2>Battle Log</h2>
-      <ul></ul>
+      <ul>
+        <li v-for="logMessage in logMessages">
+          <span :class="{'log--player': actionByPlayer(logMessage), 'log--monster': actionByMonster(logMessage)}">
+            {{actionByPlayer(logMessage) ? 'Player' : 'Monster'}}
+          </span>
+          <span v-if="healActionType(logMessage)">
+            heals himself for <span class="log--heal">{{logMessage.actionValue}}%</span>
+          </span>
+          <span v-if="attackActionType(logMessage)">
+            attacks the {{actionByPlayer(logMessage) ? 'monster' : 'player'}} for
+            <span class="log--damage">{{logMessage.actionValue}}%</span>
+          </span>
+          <span v-if="specialAttackActionType(logMessage)">
+            attacks the {{actionByPlayer(logMessage) ? 'monster' : 'player'}} with a special attack for
+            <span class="log--damage">{{logMessage.actionValue}}%</span>
+          </span>
+        </li>
+      </ul>
     </section>
   </div>
 </body>
