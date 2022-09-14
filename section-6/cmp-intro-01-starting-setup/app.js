@@ -1,4 +1,4 @@
-Vue.createApp({
+const app = Vue.createApp({
   data() {
     return {
       friends: [
@@ -18,6 +18,38 @@ Vue.createApp({
       detailsAreVisible: false,
     };
   },
+  methods: {
+    toggleDetails() {
+      this.detailsAreVisible = !this.detailsAreVisible;
+    },
+  },
+});
+
+// The components are mini Vue apps
+app.component("friend-contact", {
+  template: `
+    <li>
+      <h2>{{friend.name}}</h2>
+      <button @click="toggleDetails">
+        {{detailsLabel}} Details
+      </button>
+      <ul v-if="detailsAreVisible">
+        <li><strong>Phone:</strong> {{friend.phone}}</li>
+        <li><strong>Email:</strong> {{friend.email}}</li>
+      </ul>
+    </li>
+  `,
+  data() {
+    return {
+      friend: {
+        id: "Manuel",
+        name: "Manuel Lorenz",
+        phone: "01234 5678 991",
+        email: "manuel@localhost.com",
+      },
+      detailsAreVisible: false,
+    };
+  },
   computed: {
     detailsLabel() {
       return this.detailsAreVisible ? "Hide" : "Show";
@@ -28,4 +60,6 @@ Vue.createApp({
       this.detailsAreVisible = !this.detailsAreVisible;
     },
   },
-}).mount("#app");
+});
+
+app.mount("#app");
