@@ -1,8 +1,11 @@
 <template>
   <li class="container">
     <h2>{{ name }} {{ isFavorite ? '(Favorite)' : '' }}</h2>
-    <button @click="toggleDetails">{{ showHideLabel }} Details</button>
-    <button @click="toggleFavorite" class="ml-1">⭐️</button>
+    <button @click="deteleFriend">🗑</button>
+    <button @click="toggleDetails" class="mx-1">
+      {{ showHideLabel }} Details
+    </button>
+    <button @click="toggleFavorite">⭐️</button>
     <ul v-if="detailsAreVisible" class="mt-1">
       <li><strong>Phone:</strong> {{ phoneNumber }}</li>
       <li><strong>Email:</strong> {{ emailAddress }}</li>
@@ -41,12 +44,12 @@ export default {
       default: false,
     },
   },
-  // emits: ['toggle-favorite'],
-  emits: {
-    'toggle-favorite': (id) => {
-      return id ? true : false;
-    },
-  },
+  // emits: {
+  //   'toggle-favorite': (id) => {
+  //     return id ? true : false;
+  //   },
+  // },
+  emits: ['toggle-favorite', 'delete-friend'],
   computed: {
     showHideLabel() {
       return this.detailsAreVisible ? 'Hide' : 'Show';
@@ -58,6 +61,9 @@ export default {
     },
     toggleFavorite() {
       this.$emit('toggle-favorite', this.id);
+    },
+    deteleFriend() {
+      this.$emit('delete-friend', this.id);
     },
   },
 };

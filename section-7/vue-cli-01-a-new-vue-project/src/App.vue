@@ -13,6 +13,7 @@
       :email-address="friend.email"
       :is-favorite="friend.isFavorite"
       @toggle-favorite="toggleFavorite"
+      @delete-friend="deleteFriend"
     />
   </ul>
 </template>
@@ -53,6 +54,10 @@ export default {
         ? alert('Friend name already registered')
         : this.friends.unshift(newFriendData);
     },
+    deleteFriend(id) {
+      const remainingFriends = this.friends.filter(friend => friend.id !== id);
+      this.friends = remainingFriends;
+    }
   },
 };
 </script>
@@ -124,8 +129,9 @@ header {
   box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.26);
 }
 
-.ml-1 {
+.mx-1 {
   margin-left: calc(8 * 1px) !important;
+  margin-right: calc(8 * 1px) !important;
 }
 
 .mt-1 {

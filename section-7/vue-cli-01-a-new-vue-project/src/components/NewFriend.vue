@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <form class="form">
+    <form class="form" @submit.prevent="addNewFriend">
       <label for="name">Name</label>
       <input type="text" name="name" v-model="name" />
       <label for="phone">Phone Number</label>
@@ -11,8 +11,8 @@
         <label for="is-favorite">Favorite</label>
         <input type="checkbox" name="is-favorite" v-model="isFavorite" />
       </div>
+      <button type="submit" class="submit-button">New Friend</button>
     </form>
-    <button @click="addNewFriend">New Friend</button>
   </div>
 </template>
 
@@ -33,20 +33,21 @@ export default {
       this.isFavorite = !this.isFavorite;
     },
     addNewFriend() {
-      this.id = this.name && this.name.toLocaleLowerCase().split(' ').join('-');
+      const { name, phone, email, isFavorite } = this;
+      const id = name && name.toLocaleLowerCase().split(' ').join('-');
 
-      const newFriendData = {
-        id: this.id,
-        name: this.name,
-        phone: this.phone,
-        email: this.email,
-        isFavorite: this.isFavorite,
-      };
-
-      if (!newFriendData.name || !newFriendData.phone || !newFriendData.email) {
+      if (!name || !phone || !email) {
         alert('Friend name, phone and email are required');
         return;
       }
+
+      const newFriendData = {
+        id,
+        name,
+        phone,
+        email,
+        isFavorite,
+      };
 
       this.$emit('new-friend-data', newFriendData);
     },
@@ -66,6 +67,10 @@ export default {
   .favorite {
     display: flex;
     gap: 0.2rem;
+  }
+
+  .submit-button {
+    margin: 0.5rem auto auto auto;
   }
 }
 </style>
