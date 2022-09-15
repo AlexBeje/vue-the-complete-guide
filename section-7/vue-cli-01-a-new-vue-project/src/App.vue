@@ -7,13 +7,13 @@
       name="Manuel Lorenz"
       phone-number="0123 45678 90"
       email-address="manuel@localhost.com"
-      :is-favorite="true"
+      is-favorite="1"
     />
     <friend-contact
       name="Julie Jones"
       phone-number="0123 45678 60"
       email-address="julie@localhost.com"
-      :is-favorite="false"
+      is-favorite="0"
     />
   </ul>
 </template>
@@ -24,32 +24,33 @@ export default {
     return {
       friends: [
         {
-          id: "manuel",
-          name: "Manuel Lorenz",
-          phone: "0123 45678 90",
-          email: "lopez@localhost.com",
+          id: 'manuel',
+          name: 'Manuel Lorenz',
+          phone: '0123 45678 90',
+          email: 'lopez@localhost.com',
         },
         {
-          id: "julie",
-          name: "Julie Jones",
-          phone: "0123 45678 60",
-          email: "julie@localhost.com",
+          id: 'julie',
+          name: 'Julie Jones',
+          phone: '0123 45678 60',
+          email: 'julie@localhost.com',
         },
       ],
+      componentKey: 0,
     };
   },
 };
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Jost&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Jost&display=swap');
 
 * {
   box-sizing: border-box;
 }
 
 html {
-  font-family: "Jost", sans-serif;
+  font-family: 'Jost', sans-serif;
 }
 
 body {
