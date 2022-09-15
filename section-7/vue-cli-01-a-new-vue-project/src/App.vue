@@ -51,7 +51,7 @@ export default {
 
       friendAlreadyInFriendsList
         ? alert('Friend name already registered')
-        : this.friends.push(newFriendData);
+        : this.friends.unshift(newFriendData);
     },
   },
 };
@@ -125,6 +125,10 @@ header {
 }
 
 .ml-1 {
-  margin-left: calc(8 * 1px);
+  margin-left: calc(8 * 1px) !important;
+}
+
+.mt-1 {
+  margin-top: calc(8 * 1px) !important;
 }
 </style>

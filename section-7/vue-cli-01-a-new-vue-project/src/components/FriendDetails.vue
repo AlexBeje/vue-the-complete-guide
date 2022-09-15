@@ -3,7 +3,7 @@
     <h2>{{ name }} {{ isFavorite ? '(Favorite)' : '' }}</h2>
     <button @click="toggleDetails">{{ showHideLabel }} Details</button>
     <button @click="toggleFavorite" class="ml-1">⭐️</button>
-    <ul v-if="detailsAreVisible">
+    <ul v-if="detailsAreVisible" class="mt-1">
       <li><strong>Phone:</strong> {{ phoneNumber }}</li>
       <li><strong>Email:</strong> {{ emailAddress }}</li>
     </ul>
