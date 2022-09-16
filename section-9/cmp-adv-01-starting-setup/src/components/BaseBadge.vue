@@ -1,5 +1,7 @@
 <template>
-  <span class="badge" :class="classes">{{ caption }}</span>
+  <span class="badge" :class="classes">
+    {{ caption }}
+  </span>
 </template>
 
 <script>

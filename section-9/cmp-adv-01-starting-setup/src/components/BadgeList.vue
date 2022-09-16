@@ -1,19 +1,26 @@
 <template>
   <section>
-    <h2>Available Badges</h2>
-    <ul>
-      <li>
-        <base-badge type="admin" caption="ADMIN" />
-      </li>
-      <li>
-        <base-badge type="author" caption="AUTHOR" />
-      </li>
-    </ul>
+    <base-card>
+      <template v-slot:header>
+        <h2>Available Badges</h2>
+      </template>
+      <!-- v-slot:default can be ommited -->
+      <template v-slot:default>
+        <ul>
+          <li>
+            <base-badge type="admin" caption="ADMIN" />
+          </li>
+          <li>
+            <base-badge type="author" caption="AUTHOR" />
+          </li>
+        </ul>
+      </template>
+    </base-card>
   </section>
 </template>
 
 <style scoped>
-section h2 {
+h2 {
   margin: 0.5rem 0;
   color: #3a3a3a;
 }
