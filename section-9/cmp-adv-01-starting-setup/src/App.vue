@@ -1,14 +1,12 @@
 <template>
-  <div>
-    <!-- <TheHeader /> -->
-    <the-header />
-    <badge-list />
-    <user-info
-      :full-name="activeUser.name"
-      :info-text="activeUser.description"
-      :role="activeUser.role"
-    />
-  </div>
+  <!-- <TheHeader /> -->
+  <the-header />
+  <badge-list />
+  <user-info
+    :full-name="activeUser.name"
+    :info-text="activeUser.description"
+    :role="activeUser.role"
+  />
 </template>
 
 <script>

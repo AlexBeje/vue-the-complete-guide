@@ -1,22 +1,17 @@
 <template>
-  <section>
-    <base-card>
-      <template v-slot:header>
-        <h2>Available Badges</h2>
-      </template>
-      <!-- v-slot:default can be ommited -->
-      <template v-slot:default>
-        <ul>
-          <li>
-            <base-badge type="admin" caption="ADMIN" />
-          </li>
-          <li>
-            <base-badge type="author" caption="AUTHOR" />
-          </li>
-        </ul>
-      </template>
-    </base-card>
-  </section>
+  <base-card>
+    <!-- v-slot:default can be ommited -->
+    <template v-slot:default>
+      <ul>
+        <li>
+          <base-badge type="admin" caption="ADMIN" />
+        </li>
+        <li>
+          <base-badge type="author" caption="AUTHOR" />
+        </li>
+      </ul>
+    </template>
+  </base-card>
 </template>
 
 <style scoped>
