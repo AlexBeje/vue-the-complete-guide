@@ -1,7 +1,9 @@
 <template>
   <base-card>
     <!-- v-slot:default can be ommited -->
-    <template v-slot:default>
+    <!-- <template v-slot:default> -->
+      <!-- shorthand of the v-slot: # -->
+    <template #default>
       <ul>
         <li>
           <base-badge type="admin" caption="ADMIN" />
