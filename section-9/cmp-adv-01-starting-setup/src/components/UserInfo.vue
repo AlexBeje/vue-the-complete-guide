@@ -2,7 +2,7 @@
   <section>
     <div>
       <h3>{{ fullName }}</h3>
-      <base-badge :type="role" :caption="role.toUpperCase()"></base-badge>
+      <base-badge :type="role" :caption="role.toUpperCase()" />
     </div>
     <p>{{ infoText }}</p>
   </section>
