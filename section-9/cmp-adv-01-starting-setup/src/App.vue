@@ -1,36 +1,23 @@
 <template>
   <!-- <TheHeader /> -->
   <the-header />
-  <badge-list />
-  <user-info
-    :full-name="activeUser.name"
-    :info-text="activeUser.description"
-    :role="activeUser.role"
-  />
-  <!-- Only works if just a slot is available (default slot) -->
-  <course-goals #default="slotProps">
-    <!-- <template #default="slotProps">
-      <h2 @click="test(slotProps)">{{ slotProps.item }}</h2>
-      <p>{{ slotProps.anotherProp }}</p>
-    </template> -->
-    <h2 @click="test(slotProps)">{{ slotProps.item }}</h2>
-    <p>{{ slotProps.anotherProp }}</p>
-  </course-goals>
+  <button @click="setSelectedComponent('active-goals')">Active Goals</button>
+  <button @click="setSelectedComponent('manage-goals')">Manage Goals</button>
+  <!-- <active-goals v-if="selctedComponent === 'active-goals'" />
+  <manage-goals v-if="selctedComponent === 'manage-goals'" /> -->
+  <component :is="selctedComponent" />
 </template>
 
 <script>
 import TheHeader from './components/TheHeader.vue';
-import BadgeList from './components/BadgeList.vue';
-import UserInfo from './components/UserInfo.vue';
-import CourseGoals from './components/CourseGoals.vue';
+import ActiveGoals from './components/ActiveGoals.vue';
+import ManageGoals from './components/ManageGoals.vue';
 
 export default {
-  // Local components
-  // components: { 'the-header': TheHeader },
-  // components: { TheHeader: TheHeader },
-  components: { TheHeader, BadgeList, UserInfo, CourseGoals },
+  components: { TheHeader, ActiveGoals, ManageGoals },
   data() {
     return {
+      selctedComponent: 'active-goals',
       activeUser: {
         name: 'Maximilian Schwarzmüller',
         description: 'Site owner and admin',
@@ -39,8 +26,8 @@ export default {
     };
   },
   methods: {
-    test(item) {
-      console.log('👩‍👩‍👦‍👦', item);
+    setSelectedComponent(selectedComponent) {
+      this.selctedComponent = selectedComponent;
     },
   },
 };
