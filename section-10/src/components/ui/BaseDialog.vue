@@ -1,22 +1,24 @@
 <template>
-  <div v-if="dialogIsVisible">
-    <div class="backdrop" @click="closeDialog"></div>
-    <dialog open>
-      <header>
-        <slot name="title">
-          <h2>{{ title }}</h2>
-        </slot>
-      </header>
-      <section>
-        <slot />
-      </section>
-      <menu>
-        <slot name="actions">
-          <base-button @click="closeDialog">Close</base-button>
-        </slot>
-      </menu>
-    </dialog>
-  </div>
+  <teleport to="body">
+    <div v-if="dialogIsVisible">
+      <div class="backdrop" @click="closeDialog"></div>
+      <dialog open>
+        <header>
+          <slot name="title">
+            <h2>{{ title }}</h2>
+          </slot>
+        </header>
+        <section>
+          <slot />
+        </section>
+        <menu>
+          <slot name="actions">
+            <base-button @click="closeDialog">Close</base-button>
+          </slot>
+        </menu>
+      </dialog>
+    </div>
+  </teleport>
 </template>
 
 <script>
