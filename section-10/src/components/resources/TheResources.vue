@@ -1,5 +1,17 @@
 <template>
   <div>
+    <base-dialog
+      :dialogIsVisible="dialog.visibility"
+      :title="dialog.title"
+      @closeDialogEvent="dialog.visibility = !dialog.visibility"
+    >
+      {{ dialog.content }}
+      <template #actions>
+        <base-button @click="dialog.visibility = !dialog.visibility">
+          Ok
+        </base-button>
+      </template>
+    </base-dialog>
     <base-card>
       <div class="button-list">
         <base-button
@@ -16,7 +28,9 @@
         </base-button>
       </div>
     </base-card>
-    <component :is="selectedTab" />
+    <keep-alive>
+      <component :is="selectedTab" />
+    </keep-alive>
   </div>
 </template>
 
@@ -30,6 +44,11 @@ export default {
   },
   data() {
     return {
+      dialog: {
+        visibility: false,
+        title: '',
+        content: '',
+      },
       selectedTab: 'resources-list',
       resourcesList: [
         {
@@ -50,6 +69,8 @@ export default {
   provide() {
     return {
       resourcesList: this.resourcesList,
+      addResourceItem: this.addResourceItem,
+      removeResource: this.removeResource,
     };
   },
   methods: {
@@ -58,6 +79,49 @@ export default {
     },
     setFlatMode(selectedTab) {
       return this.selectedTab !== selectedTab && 'flat';
+    },
+    addResourceItem(resourceItem) {
+      const { title, description, link } = resourceItem;
+      if (!title || !description || !link) {
+        this.dialog.visibility = true;
+        this.dialog.title = 'Invalid';
+        this.dialog.content =
+          'Resource title, descritpion and link are required';
+        return;
+      }
+      const id =
+        resourceItem.title &&
+        resourceItem.title.toLocaleLowerCase().split(' ').join('-');
+      const duplicatedResource = this.checkIfDuplicatedResource(id, title);
+      if (duplicatedResource) {
+        this.dialog.visibility = true;
+        this.dialog.title = 'Duplicated';
+        this.dialog.content =
+          'The resource "' + duplicatedResource + '" already exists';
+        return;
+      }
+      this.resourcesList.unshift({
+        id,
+        ...resourceItem,
+      });
+    },
+    removeResource(resourceId) {
+      // Not working because we are providing the new array but modifing the old array
+      // const newResourceList = this.resourcesList.filter(
+      //   (resource) => resource.id !== resourceId
+      // );
+      // this.resourcesList = newResourceList;
+
+      const resourceIndex = this.resourcesList.findIndex(
+        (resource) => resource.id === resourceId
+      );
+      this.resourcesList.splice(resourceIndex, 1);
+    },
+    checkIfDuplicatedResource(id, title) {
+      const duplicatedResource = this.resourcesList.find(
+        (resource) => resource.id === id
+      );
+      return duplicatedResource && title;
     },
   },
 };
