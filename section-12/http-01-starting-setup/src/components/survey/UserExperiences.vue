@@ -5,8 +5,15 @@
       <p v-if="this.isLoadingSurvey.value" class="loading">
         Loading experiences ...
       </p>
-      <p v-if="this.surveyList.value.error">
+      <p v-if="this.surveyList.value.value && this.surveyList.value.error">
         {{ this.surveyList.value.error.message }}
+      </p>
+      <p
+        v-if="
+          this.addSurveyResponse.value && this.addSurveyResponse.value.error
+        "
+      >
+        {{ this.addSurveyResponse.value.error.message }}
       </p>
       <p
         v-if="
@@ -38,7 +45,7 @@ export default {
   components: {
     SurveyResult,
   },
-  inject: ['loadSurveys', 'isLoadingSurvey','surveyList'],
+  inject: ['loadSurveys', 'isLoadingSurvey', 'surveyList', 'addSurveyResponse'],
   mounted() {
     this.loadSurveys();
   },

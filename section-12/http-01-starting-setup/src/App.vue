@@ -19,12 +19,14 @@ export default {
       addSurvey: this.addSurvey,
       isLoadingSurvey: computed(() => this.isLoadingSurvey),
       surveyList: computed(() => this.surveyList),
+      addSurveyResponse: computed(() => this.addSurveyResponse),
     };
   },
   data() {
     return {
       isLoadingSurvey: false,
       surveyList: [],
+      addSurveyResponse: {},
     };
   },
   methods: {
@@ -61,9 +63,8 @@ export default {
           };
         });
     },
-    addSurvey(data) {
-      // GET / POST / DELETE / PATCH
-      fetch(
+    async addSurvey(data) {
+      this.addSurveyResponse = await fetch(
         'https://vue-http-demo-a8890-default-rtdb.europe-west1.firebasedatabase.app/surveys.json',
         {
           method: 'POST',
@@ -72,7 +73,27 @@ export default {
           },
           body: JSON.stringify(data),
         }
-      ).then(() => this.loadSurveys());
+      )
+        .then((response) => {
+          if (response.ok) {
+            this.loadSurveys();
+          } else {
+            return {
+              error: {
+                nativeMessage: `Error code: ${response.status}, Message: ${response.statusText}`,
+                message: 'Could not save data',
+              },
+            };
+          }
+        })
+        .catch((err) => {
+          return {
+            error: {
+              nativeMessage: err,
+              message: 'Something went wrong - please try again later',
+            },
+          };
+        });
     },
   },
 };
