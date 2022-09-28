@@ -2,12 +2,26 @@
   <section>
     <base-card>
       <h2>Submitted Experiences</h2>
-      <div>
-        <base-button>Load Submitted Experiences</base-button>
-      </div>
+      <p v-if="this.isLoadingSurvey.value" class="loading">
+        Loading experiences ...
+      </p>
+      <p v-if="this.surveyList.value.error">
+        {{ this.surveyList.value.error.message }}
+      </p>
+      <p
+        v-if="
+          !this.isLoadingSurvey.value &&
+          !this.surveyList.value.error &&
+          this.surveyList.value.data &&
+          !this.surveyList.value.data.length
+        "
+      >
+        No sumbitted experiences found.
+      </p>
+
       <ul>
         <survey-result
-          v-for="result in results"
+          v-for="result in surveyList.value.data"
           :key="result.id"
           :name="result.name"
           :rating="result.rating"
@@ -21,9 +35,12 @@
 import SurveyResult from './SurveyResult.vue';
 
 export default {
-  props: ['results'],
   components: {
     SurveyResult,
+  },
+  inject: ['loadSurveys', 'isLoadingSurvey','surveyList'],
+  mounted() {
+    this.loadSurveys();
   },
 };
 </script>
@@ -33,5 +50,8 @@ ul {
   list-style: none;
   margin: 0;
   padding: 0;
+}
+p {
+  color: gray;
 }
 </style>
