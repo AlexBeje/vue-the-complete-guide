@@ -29,16 +29,16 @@ export default {
     };
   },
   created() {
-    this.getTeamData(this.$route);
+    this.getTeamData(this.teamId);
   },
   watch: {
-    $route() {
-      this.getTeamData();
+    teamId(newId) {
+      this.getTeamData(newId);
     },
   },
   methods: {
-    getTeamData() {
-      const team = this.teams.find((team) => team.id === this.teamId);
+    getTeamData(teamId) {
+      const team = this.teams.find((team) => team.id === teamId);
       this.teamName = team.name;
 
       const members = [];
