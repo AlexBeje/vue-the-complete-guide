@@ -30,7 +30,12 @@ export default {
   },
   created() {
     this.getTeamData(this.teamId);
-    console.log('💀', this.$route.query)
+    console.log('💀', this.$route.query);
+  },
+  beforeRouteUpdate(to, from, next) {
+    console.log('👟', to, from);
+    this.getTeamData(to.params.teamId);
+    next();
   },
   watch: {
     teamId(newId) {
