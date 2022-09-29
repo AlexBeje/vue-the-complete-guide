@@ -30,6 +30,7 @@ export default {
   },
   created() {
     this.getTeamData(this.teamId);
+    console.log('💀', this.$route.query)
   },
   watch: {
     teamId(newId) {
