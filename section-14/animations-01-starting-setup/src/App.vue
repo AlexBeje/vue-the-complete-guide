@@ -5,7 +5,15 @@
   </div>
   <div class="container">
     <button @click="toggleParagraph">Toggle Partagraph</button>
-    <transition name="para">
+    <transition
+      name="para"
+      @before-enter="animationEvent($event, 'beforeEnter')"
+      @enter="animationEvent($event, 'enter')"
+      @after-enter="animationEvent($event, 'afterEnter')"
+      @before-leave="animationEvent($event, 'beforeLeave')"
+      @leave="animationEvent($event, 'leave')"
+      @after-leave="animationEvent($event, 'afterLeave')"
+    >
       <p v-if="paraIsVisible">This is only sometimes invisible</p>
     </transition>
   </div>
@@ -52,6 +60,10 @@ export default {
     },
     hideUsers() {
       this.usersAreVisible = false;
+    },
+    animationEvent(el, type) {
+      console.log('👨‍👩‍👦‍👦', el);
+      console.log('🧞‍♀️', type);
     },
   },
 };
@@ -147,11 +159,11 @@ button:active {
 }
 
 .fade-button-enter-from {
-  transform: scale(.9);
+  transform: scale(0.9);
 }
 
 .fade-button-enter-active {
-  transition: transform .1s ease-in;
+  transition: transform 0.1s ease-in;
 }
 
 .fade-button-enter-to {
@@ -163,10 +175,10 @@ button:active {
 }
 
 .fade-button-leave-active {
-  transition: transform .1s ease-in;
+  transition: transform 0.1s ease-in;
 }
 
 .fade-button-leave-to {
-  transform: scale(.9);
+  transform: scale(0.9);
 }
 </style>
