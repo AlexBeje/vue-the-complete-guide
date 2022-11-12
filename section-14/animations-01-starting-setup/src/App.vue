@@ -9,10 +9,16 @@
       <p v-if="paraIsVisible">This is only sometimes invisible</p>
     </transition>
   </div>
-    <base-modal @close="hideDialog" :open="dialogIsVisible">
-      <p>This is a test dialog!</p>
-      <button @click="hideDialog">Close it!</button>
-    </base-modal>
+  <div class="container">
+    <transition name="fade-button" mode="out-in">
+      <button @click="showUsers" v-if="!usersAreVisible">Show users</button>
+      <button @click="hideUsers" v-else>Hide Users</button>
+    </transition>
+  </div>
+  <base-modal @close="hideDialog" :open="dialogIsVisible">
+    <p>This is a test dialog!</p>
+    <button @click="hideDialog">Close it!</button>
+  </base-modal>
   <div class="container">
     <button @click="showDialog">Show Dialog</button>
   </div>
@@ -25,6 +31,7 @@ export default {
       animatedBlock: false,
       dialogIsVisible: false,
       paraIsVisible: false,
+      usersAreVisible: false,
     };
   },
   methods: {
@@ -39,6 +46,12 @@ export default {
     },
     toggleParagraph() {
       this.paraIsVisible = !this.paraIsVisible;
+    },
+    showUsers() {
+      this.usersAreVisible = true;
+    },
+    hideUsers() {
+      this.usersAreVisible = false;
     },
   },
 };
@@ -131,5 +144,29 @@ button:active {
 .para-leave-to {
   /* opacity: 0;
   transform: translateY(30px); */
+}
+
+.fade-button-enter-from {
+  transform: scale(.9);
+}
+
+.fade-button-enter-active {
+  transition: transform .1s ease-in;
+}
+
+.fade-button-enter-to {
+  transform: scale(1);
+}
+
+.fade-button-leave-from {
+  transform: scale(1);
+}
+
+.fade-button-leave-active {
+  transition: transform .1s ease-in;
+}
+
+.fade-button-leave-to {
+  transform: scale(.9);
 }
 </style>
