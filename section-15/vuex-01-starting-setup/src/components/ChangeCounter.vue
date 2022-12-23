@@ -9,10 +9,10 @@
 export default {
   methods: {
     addOne() {
-      this.$store.commit('increaseByOne');
+      this.$store.dispatch('increment');
     },
     add(increment) {
-      this.$store.commit('increaseBy', { increment });
+      this.$store.dispatch('increase', { increment });
     },
   },
 };
