@@ -22,7 +22,7 @@ const store = createStore({
       setTimeout(() => context.commit('increment'));
     },
     increase(context, payload) {
-      setTimeout(() => context.commit('increment', payload));
+      setTimeout(() => context.commit('increase', payload));
     },
   },
   getters: {
