@@ -1,16 +1,39 @@
 <template>
   <section class="container">
-    <h2>{{ userName }}</h2>
+    <!-- <h2>{{ userName }}</h2> -->
+    <!-- <h3>{{ userAge }}</h3> -->
+    <h2>{{ user.userName }}</h2>
+    <h3>{{ user.userAge }}</h3>
   </section>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+// import { ref } from 'vue';
 
-const userName = ref('Alexandru');
+// const userName = ref('Alexandru');
+// const userAge = ref(29);
+
+// const user = ref({
+//   userName: 'Alexandru',
+//   userAge: 29,
+// });
+
+// setTimeout(() => {
+//   user.value.userName = 'Alex';
+//   user.value.userAge = 1993;
+// }, 2000);
+
+// For objects (it removes the .value extra method)
+import { reactive } from 'vue';
+
+const user = reactive({
+  userName: 'Alexandru',
+  userAge: 29,
+});
 
 setTimeout(() => {
-  userName.value = 'Alex';
+  user.userName = 'Alex';
+  user.userAge = 1993;
 }, 2000);
 </script>
 
