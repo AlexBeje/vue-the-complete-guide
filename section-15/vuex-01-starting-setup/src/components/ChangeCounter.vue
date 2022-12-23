@@ -10,13 +10,13 @@ import { mapActions } from 'vuex';
 export default {
   methods: {
     // addOne() {
-    //   this.$store.dispatch('increment');
+    //   this.$store.dispatch('counter/increment');
     // },
     // add(increment) {
-    //   this.$store.dispatch('increase', { increment });
+    //   this.$store.dispatch('counter/increase', { increment });
     // },
-    // ...mapActions(['increment', 'increase']),
-    ...mapActions({
+    // ...mapActions('counter', ['increment', 'increase']),
+    ...mapActions('counter', {
       inc: 'increment',
       increase: 'increase',
     }),
