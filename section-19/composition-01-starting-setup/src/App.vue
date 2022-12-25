@@ -7,7 +7,8 @@
       <br />
       <input type="text" placeholder="First Name" v-model="firstName" />
       <br />
-      <input type="text" placeholder="Last Name" v-model="lastName" />
+      <input type="text" placeholder="Last Name" ref="lastNameInput" />
+      <button @click="setLastName">Set Last Name</button>
       <br />
       <p>
         Name: <strong>{{ fullName }}</strong>
@@ -17,7 +18,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed, watch } from 'vue';
+import { ref, reactive, computed } from 'vue';
 
 const user = reactive({
   userName: 'Alexandru',
@@ -26,6 +27,7 @@ const user = reactive({
 
 const firstName = ref('');
 const lastName = ref('');
+const lastNameInput = ref(null);
 
 const fullName = computed(() => {
   return firstName.value + ' ' + lastName.value;
@@ -35,14 +37,9 @@ function changeAge(age) {
   user.userAge = age;
 }
 
-watch([firstName, lastName], (newValue, oldValue) => {
-  console.log('First Name Old value:', oldValue[0]);
-  console.log('First Name New value:', newValue[0]);
-  console.log('-')
-  console.log('Last Name Old value:', oldValue[1]);
-  console.log('Last Name New value:', newValue[1]);
-  console.log('---')
-});
+function setLastName() {
+  lastName.value = lastNameInput.value.value;
+}
 </script>
 
 <style>
