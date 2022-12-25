@@ -10,14 +10,14 @@
       <input type="text" placeholder="Last Name" v-model="lastName" />
       <br />
       <p>
-        Name: <strong>{{ test }}</strong>
+        Name: <strong>{{ fullName }}</strong>
       </p>
     </div>
   </section>
 </template>
 
 <script setup>
-import { ref, reactive, computed } from 'vue';
+import { ref, reactive, computed, watch } from 'vue';
 
 const user = reactive({
   userName: 'Alexandru',
@@ -27,13 +27,22 @@ const user = reactive({
 const firstName = ref('');
 const lastName = ref('');
 
-const test = computed(() => {
+const fullName = computed(() => {
   return firstName.value + ' ' + lastName.value;
 });
 
 function changeAge(age) {
   user.userAge = age;
 }
+
+watch([firstName, lastName], (newValue, oldValue) => {
+  console.log('First Name Old value:', oldValue[0]);
+  console.log('First Name New value:', newValue[0]);
+  console.log('-')
+  console.log('Last Name Old value:', oldValue[1]);
+  console.log('Last Name New value:', newValue[1]);
+  console.log('---')
+});
 </script>
 
 <style>
